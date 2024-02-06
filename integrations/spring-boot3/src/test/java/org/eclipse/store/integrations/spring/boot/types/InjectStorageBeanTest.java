@@ -14,27 +14,45 @@ package org.eclipse.store.integrations.spring.boot.types;
  * #L%
  */
 
+import org.eclipse.store.integrations.spring.boot.types.configuration.EclipseStoreProperties;
+import org.eclipse.store.integrations.spring.boot.types.converter.EclipseStoreConfigConverter;
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 
-@TestPropertySource("classpath:application-run.properties")
+@TestPropertySource("classpath:application-inject-test.properties")
 @SpringBootTest(classes = {EclipseStoreSpringBoot.class})
+@Import(InjectStorageBeanTest.InjectConfiguration.class)
 public class InjectStorageBeanTest
 {
 
     @Autowired
+    @Qualifier("embeddedStorageManager")
     EmbeddedStorageManager manager;
 
 
     @Test
-    void storeSomething()
+    void injectStorageTest()
     {
         this.manager.start();
         this.manager.setRoot("hello");
         this.manager.storeRoot();
         this.manager.shutdown();
+    }
+
+    @TestConfiguration
+    static class InjectConfiguration{
+
+        @Autowired
+        EclipseStoreProperties properties;
+
+
+
     }
 }

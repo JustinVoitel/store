@@ -32,7 +32,6 @@ import org.springframework.test.context.TestPropertySource;
 public class EclipseConfigurationSqlSpringTest
 {
 
-    @Qualifier("eclipseStoreProperties")
     @Autowired
     EclipseStoreProperties values;
 

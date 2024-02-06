@@ -19,6 +19,7 @@ import org.eclipse.store.integrations.spring.boot.types.configuration.EclipseSto
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * The {@code EclipseStoreSpringBoot} class is responsible for the auto-configuration of the Spring Boot application.
@@ -39,7 +40,7 @@ import org.springframework.context.annotation.ComponentScan;
  * </pre>
  */
 
-@AutoConfiguration
+@Configuration
 @ComponentScan(basePackages = "org.eclipse.store.integrations.spring.boot.types")
 @EnableConfigurationProperties(EclipseStoreProperties.class)
 public class EclipseStoreSpringBoot

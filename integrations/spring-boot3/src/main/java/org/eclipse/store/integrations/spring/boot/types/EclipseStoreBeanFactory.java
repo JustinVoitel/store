@@ -26,7 +26,6 @@ import org.springframework.stereotype.Component;
  * It uses the {@code EclipseStoreProvider} and {@code EclipseStoreProperties} to create the {@code EmbeddedStorageManager}.
  */
 @Component
-@Lazy
 public class EclipseStoreBeanFactory
 {
     private final EclipseStoreProvider eclipseStoreProvider;
@@ -52,7 +51,6 @@ public class EclipseStoreBeanFactory
      * @return A new {@code EmbeddedStorageManager} instance.
      */
     @Bean
-    @Primary
     @Lazy
     public EmbeddedStorageManager embeddedStorageManager()
     {

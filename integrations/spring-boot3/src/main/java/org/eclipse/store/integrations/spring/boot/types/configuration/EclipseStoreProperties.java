@@ -29,8 +29,6 @@ import org.springframework.context.annotation.Primary;
  * <p>Each property in this class corresponds to a configuration option for the Eclipse Store.
  * The properties are loaded from the configuration files when the application starts.</p>
  */
-@Configuration
-@Primary
 @ConfigurationProperties(prefix = "org.eclipse.store")
 public class EclipseStoreProperties
 {

@@ -14,28 +14,37 @@ package org.eclipse.store.integrations.spring.boot.types.storages;
  * #L%
  */
 
+import org.eclipse.store.integrations.spring.boot.types.EclipseStoreProvider;
 import org.eclipse.store.integrations.spring.boot.types.EclipseStoreSpringBoot;
+import org.eclipse.store.integrations.spring.boot.types.configuration.EclipseStoreProperties;
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.test.context.NestedTestConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 @TestPropertySource("classpath:application-two-storages.properties")
-@Import(TwoBeanConfiguration.class)
-@SpringBootTest(classes = {EclipseStoreSpringBoot.class, TwoStoragesTest.class})
+@Import(TwoStoragesTest.TwoBeanConfiguration.class)
+@SpringBootTest(classes = {EclipseStoreSpringBoot.class})
 public class TwoStoragesTest
 {
 
     @Autowired
     @Qualifier("first_storage")
+    @Lazy
     EmbeddedStorageManager firstStorage;
 
     @Autowired
     @Qualifier("second_storage")
+    @Lazy
     EmbeddedStorageManager secondStorage;
 
 
@@ -46,4 +55,45 @@ public class TwoStoragesTest
         Assertions.assertEquals("SecondRoot{intValue=50, c=c}", this.secondStorage.root().toString());
     }
 
+    @Lazy
+    static class TwoBeanConfiguration
+    {
+
+        @Autowired
+        private EclipseStoreProvider provider;
+
+        @Bean("first_config")
+        @Lazy
+        @ConfigurationProperties("org.eclipse.store.first")
+        EclipseStoreProperties firstStoreProperties()
+        {
+            return new EclipseStoreProperties();
+        }
+
+        @Bean("second_config")
+        @Lazy
+        @ConfigurationProperties("org.eclipse.store.second")
+        EclipseStoreProperties secondStoreProperties()
+        {
+            return new EclipseStoreProperties();
+        }
+
+        @Bean
+        @Lazy
+        @Qualifier("first_storage")
+        EmbeddedStorageManager createFirstStorage(@Qualifier("first_config") final EclipseStoreProperties firstStoreProperties)
+        {
+            return this.provider.createStorage(firstStoreProperties);
+        }
+
+        @Bean
+        @Lazy
+        @Qualifier("second_storage")
+        EmbeddedStorageManager createSecondStorage(@Qualifier("second_config") final EclipseStoreProperties secondStoreProperties)
+        {
+            return this.provider.createStorage(secondStoreProperties);
+        }
+
+
+    }
 }
