@@ -1,4 +1,4 @@
-package org.eclipse.store.integrations.spring.boot.types;
+package test.eclipse.store.integrations.spring.boot;
 
 /*-
  * #%L
@@ -14,6 +14,7 @@ package org.eclipse.store.integrations.spring.boot.types;
  * #L%
  */
 
+import org.eclipse.store.integrations.spring.boot.types.EclipseStoreSpringBoot;
 import org.eclipse.store.integrations.spring.boot.types.configuration.EclipseStoreProperties;
 import org.eclipse.store.integrations.spring.boot.types.converter.EclipseStoreConfigConverter;
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager;

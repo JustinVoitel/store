@@ -1,4 +1,4 @@
-package org.eclipse.store.integrations.spring.boot.types.storages;
+package test.eclipse.store.integrations.spring.boot.storages;
 
 /*-
  * #%L
@@ -27,10 +27,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.NestedTestConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 @TestPropertySource("classpath:application-two-storages.properties")

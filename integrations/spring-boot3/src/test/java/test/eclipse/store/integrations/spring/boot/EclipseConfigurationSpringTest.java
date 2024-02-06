@@ -1,4 +1,4 @@
-package org.eclipse.store.integrations.spring.boot.types;
+package test.eclipse.store.integrations.spring.boot;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,6 +19,7 @@ import java.util.Map;
  * #L%
  */
 
+import org.eclipse.store.integrations.spring.boot.types.EclipseStoreSpringBoot;
 import org.eclipse.store.integrations.spring.boot.types.configuration.EclipseStoreProperties;
 import org.eclipse.store.integrations.spring.boot.types.converter.EclipseStoreConfigConverter;
 import org.junit.jupiter.api.Test;

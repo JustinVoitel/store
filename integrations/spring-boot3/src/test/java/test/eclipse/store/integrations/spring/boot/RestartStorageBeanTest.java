@@ -1,4 +1,4 @@
-package org.eclipse.store.integrations.spring.boot.types;
+package test.eclipse.store.integrations.spring.boot;
 
 /*-
  * #%L
@@ -17,6 +17,8 @@ package org.eclipse.store.integrations.spring.boot.types;
 
 import java.nio.file.Path;
 
+import org.eclipse.store.integrations.spring.boot.types.EclipseStoreProvider;
+import org.eclipse.store.integrations.spring.boot.types.EclipseStoreSpringBoot;
 import org.eclipse.store.integrations.spring.boot.types.configuration.ConfigurationPair;
 import org.eclipse.store.integrations.spring.boot.types.configuration.EclipseStoreProperties;
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageFoundation;
