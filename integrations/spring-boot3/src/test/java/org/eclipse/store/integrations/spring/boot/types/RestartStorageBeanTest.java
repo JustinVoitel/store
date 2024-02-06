@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import org.eclipse.store.integrations.spring.boot.types.configuration.ConfigurationPair;
 import org.eclipse.store.integrations.spring.boot.types.configuration.EclipseStoreProperties;
 import org.eclipse.store.integrations.spring.boot.types.converter.EclipseStoreConfigConverter;
+import org.eclipse.store.integrations.spring.boot.types.storages.TwoStoragesTest;
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageFoundation;
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager;
 import org.junit.jupiter.api.Assertions;
@@ -27,18 +28,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 @TestPropertySource("classpath:application-run-test.properties")
-//@SpringBootTest(classes = {EclipseStoreProperties.class, EclipseStoreProviderImpl.class, EclipseStoreConfigConverter.class})
 @SpringBootTest(classes = {EclipseStoreSpringBoot.class})
 @Import(RestartStorageBeanTest.RestartStorageBeanConfiguration.class)
+@ActiveProfiles({ "restart_storage" })
 public class RestartStorageBeanTest
 {
 
@@ -92,6 +96,7 @@ public class RestartStorageBeanTest
     }
 
     @TestConfiguration
+    @Profile("restart_storage")
     static class RestartStorageBeanConfiguration
     {
 
@@ -99,6 +104,7 @@ public class RestartStorageBeanTest
         EclipseStoreProvider provider;
 
         @Autowired
+        @Qualifier("org.eclipse.store-org.eclipse.store.integrations.spring.boot.types.configuration.EclipseStoreProperties")
         EclipseStoreProperties myConfiguration;
 
         @Bean("restartStorageBean")

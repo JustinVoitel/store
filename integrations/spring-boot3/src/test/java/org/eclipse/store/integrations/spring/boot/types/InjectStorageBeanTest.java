@@ -28,12 +28,10 @@ import org.springframework.test.context.TestPropertySource;
 
 @TestPropertySource("classpath:application-inject-test.properties")
 @SpringBootTest(classes = {EclipseStoreSpringBoot.class})
-@Import(InjectStorageBeanTest.InjectConfiguration.class)
 public class InjectStorageBeanTest
 {
 
     @Autowired
-    @Qualifier("embeddedStorageManager")
     EmbeddedStorageManager manager;
 
 
@@ -46,13 +44,4 @@ public class InjectStorageBeanTest
         this.manager.shutdown();
     }
 
-    @TestConfiguration
-    static class InjectConfiguration{
-
-        @Autowired
-        EclipseStoreProperties properties;
-
-
-
-    }
 }

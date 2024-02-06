@@ -28,42 +28,43 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.NestedTestConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 @TestPropertySource("classpath:application-two-storages.properties")
 @Import(TwoStoragesTest.TwoBeanConfiguration.class)
 @SpringBootTest(classes = {EclipseStoreSpringBoot.class})
+@ActiveProfiles({ "two_storages" })
 public class TwoStoragesTest
 {
 
     @Autowired
     @Qualifier("first_storage")
-    @Lazy
     EmbeddedStorageManager firstStorage;
 
     @Autowired
     @Qualifier("second_storage")
-    @Lazy
     EmbeddedStorageManager secondStorage;
 
 
     @Test
-    void name()
+    void twoStoragesTest()
     {
         Assertions.assertEquals("FirstRoot{value='First root value'}", this.firstStorage.root().toString());
         Assertions.assertEquals("SecondRoot{intValue=50, c=c}", this.secondStorage.root().toString());
     }
 
-    @Lazy
-    static class TwoBeanConfiguration
+    @TestConfiguration
+    @Profile({ "two_storages" })
+    static public class TwoBeanConfiguration
     {
 
         @Autowired
         private EclipseStoreProvider provider;
 
         @Bean("first_config")
-        @Lazy
         @ConfigurationProperties("org.eclipse.store.first")
         EclipseStoreProperties firstStoreProperties()
         {
@@ -71,7 +72,6 @@ public class TwoStoragesTest
         }
 
         @Bean("second_config")
-        @Lazy
         @ConfigurationProperties("org.eclipse.store.second")
         EclipseStoreProperties secondStoreProperties()
         {
@@ -79,7 +79,6 @@ public class TwoStoragesTest
         }
 
         @Bean
-        @Lazy
         @Qualifier("first_storage")
         EmbeddedStorageManager createFirstStorage(@Qualifier("first_config") final EclipseStoreProperties firstStoreProperties)
         {
@@ -87,7 +86,6 @@ public class TwoStoragesTest
         }
 
         @Bean
-        @Lazy
         @Qualifier("second_storage")
         EmbeddedStorageManager createSecondStorage(@Qualifier("second_config") final EclipseStoreProperties secondStoreProperties)
         {
