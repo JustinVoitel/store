@@ -19,8 +19,6 @@ import java.nio.file.Path;
 
 import org.eclipse.store.integrations.spring.boot.types.configuration.ConfigurationPair;
 import org.eclipse.store.integrations.spring.boot.types.configuration.EclipseStoreProperties;
-import org.eclipse.store.integrations.spring.boot.types.converter.EclipseStoreConfigConverter;
-import org.eclipse.store.integrations.spring.boot.types.storages.TwoStoragesTest;
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageFoundation;
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager;
 import org.junit.jupiter.api.Assertions;
@@ -28,21 +26,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 @TestPropertySource("classpath:application-run-test.properties")
 @SpringBootTest(classes = {EclipseStoreSpringBoot.class})
 @Import(RestartStorageBeanTest.RestartStorageBeanConfiguration.class)
-@ActiveProfiles({ "restart_storage" })
+@ActiveProfiles({"restart_storage"})
 public class RestartStorageBeanTest
 {
 
@@ -51,6 +46,10 @@ public class RestartStorageBeanTest
 
     @Autowired
     EclipseStoreProperties myConfiguration;
+
+    @TempDir
+    static Path tempFolder;
+
 
     @Test
     void restartStorageTest(@Autowired @Qualifier("restartStorageBean") final EmbeddedStorageManager manager)
@@ -61,7 +60,10 @@ public class RestartStorageBeanTest
         manager.storeRoot();
         manager.shutdown();
 
-        final EmbeddedStorageFoundation<?> storageFoundation = this.provider.createStorageFoundation(this.myConfiguration);
+        Assertions.assertEquals(tempFolder.toAbsolutePath().toString(), manager.configuration().fileProvider().baseDirectory().toPathString());
+
+        final ConfigurationPair pair = new ConfigurationPair("someKey", "someValue");
+        final EmbeddedStorageFoundation<?> storageFoundation = this.provider.createStorageFoundation(this.myConfiguration, pair);
         final RestartRoot root2 = new RestartRoot();
         storageFoundation.setRoot(root2);
         try (EmbeddedStorageManager storage = storageFoundation.start())
@@ -108,9 +110,9 @@ public class RestartStorageBeanTest
         EclipseStoreProperties myConfiguration;
 
         @Bean("restartStorageBean")
-        @Lazy
         EmbeddedStorageManager restartStorageBean()
         {
+            this.myConfiguration.setStorageDirectory(tempFolder.toAbsolutePath().toString());
             final EmbeddedStorageFoundation<?> storageFoundation = this.provider.createStorageFoundation(this.myConfiguration);
 
             return storageFoundation.createEmbeddedStorageManager();
