@@ -18,6 +18,7 @@ import org.eclipse.store.integrations.spring.boot.types.configuration.EclipseSto
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
@@ -54,7 +55,7 @@ public class EclipseStoreBeanFactory
      * @return A new {@code EmbeddedStorageManager} instance.
      */
     @Bean
-    @Lazy
+    @ConditionalOnMissingBean
     public EmbeddedStorageManager embeddedStorageManager()
     {
         return this.eclipseStoreProvider.createStorage(this.eclipseStoreProperties);
