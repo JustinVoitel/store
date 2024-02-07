@@ -40,8 +40,7 @@ public class EclipseStoreBeanFactory
      * @param eclipseStoreProvider The provider used to create {@code EmbeddedStorageManager} instances.
      * @param eclipseStoreProperties The properties used to configure the {@code EmbeddedStorageManager}.
      */
-    public EclipseStoreBeanFactory(final EclipseStoreProvider eclipseStoreProvider,
-                                   @Qualifier("org.eclipse.store-org.eclipse.store.integrations.spring.boot.types.configuration.EclipseStoreProperties") final EclipseStoreProperties eclipseStoreProperties)
+    public EclipseStoreBeanFactory(final EclipseStoreProvider eclipseStoreProvider, final EclipseStoreProperties eclipseStoreProperties)
     {
         this.eclipseStoreProvider = eclipseStoreProvider;
         this.eclipseStoreProperties = eclipseStoreProperties;
