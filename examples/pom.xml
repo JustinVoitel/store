@@ -86,6 +86,7 @@
 			</activation>
 			<modules>
 				<module>spring-boot3-simple</module>
+				<module>spring-boot3-advance</module>
 			</modules>
 		</profile>
 	</profiles>
