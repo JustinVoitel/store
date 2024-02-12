@@ -24,6 +24,7 @@ import org.eclipse.store.integrations.spring.boot.types.factories.EmbeddedStorag
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageFoundation;
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager;
 import org.microstream.spring.boot.example.model.Root;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -33,20 +34,12 @@ import java.util.List;
 @Component
 public class JokesStorageImpl implements JokesStorage
 {
-    private final EmbeddedStorageManagerFactory managerFactory;
-    private final EmbeddedStorageFoundationFactory foundationFactory;
 
     private EmbeddedStorageManager storageManager;
 
-    public JokesStorageImpl(EclipseStoreProperties myConfiguration, EmbeddedStorageManagerFactory managerFactory, EmbeddedStorageFoundationFactory foundationFactory)
+    public JokesStorageImpl(EmbeddedStorageManager storageManager)
     {
-        this.managerFactory = managerFactory;
-        this.foundationFactory = foundationFactory;
-
-        EmbeddedStorageFoundation<?> foundation = foundationFactory.createStorageFoundation(myConfiguration);
-
-        storageManager = managerFactory.createStorage(foundation, myConfiguration.isAutoStart());
-
+        this.storageManager = storageManager;
     }
 
     @Override
