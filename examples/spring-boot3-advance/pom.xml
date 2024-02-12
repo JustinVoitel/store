@@ -10,8 +10,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>EclipseStore Example Spring Boot3 Simple</name>
-    <artifactId>spring-boot3-simple</artifactId>
+    <name>EclipseStore Example Spring Boot3 Advance</name>
+    <artifactId>spring-boot3-advance</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -64,7 +64,7 @@
     </dependencies>
 
     <build>
-        <finalName>spring-boot3-simple</finalName>
+        <finalName>spring-boot3-advance</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
