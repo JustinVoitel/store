@@ -57,6 +57,7 @@
         <module>cache</module>
         <module>storage</module>
         <module>integrations</module>
+        <module>integrations/quarkus3</module>
     </modules>
 
     <scm>
