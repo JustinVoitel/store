@@ -1,8 +1,8 @@
-name: MicroStream Quarkus 3 Extension
-description: Integrate MicroStream within your application.
+name: EclipseStore Quarkus 3 Extension
+description: Integrate EclipseStore within your application.
 metadata:
   keywords:
-    - MicroStream
+    - EclipseStore
   guide: https://docs.microstream.one/manual/misc/integrations/quarkus.html
   categories:
     - "integration"
