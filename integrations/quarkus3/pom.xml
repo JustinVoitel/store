@@ -16,6 +16,7 @@
     <properties>
         <quarkus.version>3.8.0</quarkus.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
+        <surefire-plugin.version>3.0.0</surefire-plugin.version>
     </properties>
 
     <modules>
@@ -60,6 +61,18 @@
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <configuration>
                     <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-plugin.version}</version>
+                <configuration>
+                    <skip>false</skip>
+                    <systemPropertyVariables>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                        <maven.home>${maven.home}</maven.home>
+                        <maven.repo>${settings.localRepository}</maven.repo>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
