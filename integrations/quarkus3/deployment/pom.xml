@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>quarkus3-extension-deployment</artifactId>
+    <artifactId>integrations-quarkus3-extension-deployment</artifactId>
     <name>EclipseStore Quarkus 3 Extension - Deployment</name>
     <url>https://projects.eclipse.org/projects/technology.store</url>
 
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.eclipse.store</groupId>
             <artifactId>integrations-quarkus3-extension</artifactId>
-            <version>${project.version}</version>
+            <version>1.3.0-SNAPSHOT</version>
         </dependency>
 
         <!-- test dependencies -->
@@ -31,7 +31,6 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5-internal</artifactId>
             <scope>test</scope>
-            <version>${quarkus.version}</version>
         </dependency>
 
         <dependency>

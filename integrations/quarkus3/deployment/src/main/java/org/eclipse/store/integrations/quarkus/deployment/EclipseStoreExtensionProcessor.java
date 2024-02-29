@@ -1,5 +1,19 @@
 package org.eclipse.store.integrations.quarkus.deployment;
 
+/*-
+ * #%L
+ * EclipseStore Quarkus 3 Extension - Deployment
+ * %%
+ * Copyright (C) 2023 - 2024 MicroStream Software
+ * %%
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ * 
+ * SPDX-License-Identifier: EPL-2.0
+ * #L%
+ */
+
 
 
 
@@ -33,16 +47,16 @@ import java.util.stream.Collectors;
 /**
  * Quarkus extension processor to handle the {@link Storage} annotation.
  */
-class MicrostreamExtensionProcessor
+class EclipseStoreExtensionProcessor
 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MicrostreamExtensionProcessor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EclipseStoreExtensionProcessor.class);
 
     private static final DotName STORAGE_ANNOTATION = DotName.createSimple(Storage.class.getName());
 
     private static final DotName INJECT_ANNOTATION = DotName.createSimple(Inject.class.getName());
 
-    private static final String FEATURE = "microstream-extension";
+    private static final String FEATURE = "eclipse-store-extension";
 
     @BuildStep
     FeatureBuildItem feature()
@@ -53,7 +67,7 @@ class MicrostreamExtensionProcessor
     @BuildStep
     StorageBeanBuildItem findStorageRoot(final BeanArchiveIndexBuildItem beanArchiveIndex)
     {
-        LOGGER.debug("BuildStep for MicroStream: Find any class that is annotated with @Storage");
+        LOGGER.debug("BuildStep for EclipseStore: Find any class that is annotated with @Storage");
         final Set<StorageClassInfo> rootClasses = findAnnotatedClasses(beanArchiveIndex);
         if (rootClasses.size() > 1)
         {
@@ -74,7 +88,7 @@ class MicrostreamExtensionProcessor
 
         if (rootClass.isPresent())
         {
-            LOGGER.debug("BuildStep for MicroStream: Configure a SyntheticBeanBuildItem for the @Storage bean");
+            LOGGER.debug("BuildStep for EclipseStore: Configure a SyntheticBeanBuildItem for the @Storage bean");
             LOGGER.info(String.format("Processing Extension: @Storage found at %s", rootClass));
             return SyntheticBeanBuildItem.configure(rootClass.get())
                     .scope(Singleton.class)
@@ -94,7 +108,7 @@ class MicrostreamExtensionProcessor
     @BuildStep
     SyntheticBeanBuildItem storageBean(final StorageBeanBuildItem storageBeanBuildItem)
     {
-        LOGGER.debug("BuildStep for MicroStream: Configure a SyntheticBeanBuildItem for the bean keeping info about @Storage class");
+        LOGGER.debug("BuildStep for EclipseStore: Configure a SyntheticBeanBuildItem for the bean keeping info about @Storage class");
 
         final Optional<Class<?>> rootClass = storageBeanBuildItem.getRootClass();
 
